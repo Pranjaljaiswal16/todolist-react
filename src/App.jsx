@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import Create from "./component/Create";
+import Read from "./component/Read";
 
 const App = () => {
   const [todos, settodos] = useState([
@@ -9,72 +11,11 @@ const App = () => {
     },
   ]);
 
-  const [title, settitle] = useState();
-  const [checked, setchecked] = useState(true);
-  const [gender, setgender] = useState("male");
-  const [city, setcity] = useState("mumbai");
-
   return (
-    <>
-      <div>
-        <h1>Create Task</h1>
-
-        <form>
-          <input
-            type="text"
-            placeholder="title"
-            onClick={(e) => {
-              settitle(e.target.value);
-            }}
-            value={title}
-          />
-          <br />
-          <br />
-          <input
-            type="checkbox"
-            onClick={(e) => {
-              setchecked(e.target.checked);
-            }}
-            checked={checked}
-          />
-          isActive
-          <br />
-          <br />
-          <input
-            value={"male"}
-            type="radio"
-            onClick={(e) => {
-              setgender(e.target.value);
-            }}
-            checked={gender == "male" && true}
-          />
-          Male
-          <br />
-          <br />
-          <input
-            value={"female"}
-            type="radio"
-            onChange={(e) => {
-              setgender(e.target.value);
-            }}
-            checked={gender == "female" && true}
-          />
-          female
-          <br />
-          <br />
-          <select
-            onClick={(e) => {
-              setcity(e.target.value);
-            }}
-            value={city}
-          >
-            <option value={"delhi"}>Delhi</option>
-            <option value={"mumbai"}>Mumbai</option>
-            <option value={"kolkata"}>Kolkata</option>
-          </select>
-        </form>
-      </div>
-    </>
+    <div className="w-screen h-screen bg-gray-900 flex p-10 text-white">
+      <Create todos={todos} settodos={settodos} />
+      <Read todos={todos} settodos={settodos} />
+    </div>
   );
 };
 
