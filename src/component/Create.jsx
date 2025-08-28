@@ -1,25 +1,28 @@
 import { nanoid } from "nanoid";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const Create = (props) => {
   const todos = props.todos;
   const settodos = props.settodos;
 
-  const [title, settitle] = useState("");
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const submitHandler = (users) => {
+    users.isCompleted = false;
+    users.id = nanoid();
 
-    const newtodos = {
-      id: nanoid(),
-      title,
-      isCompleted: false,
-    };
     const copytodos = [...todos];
-    copytodos.push(newtodos);
+    copytodos.push(users);
     settodos(copytodos);
+    toast.success("Todo Created!👻");
 
-    settitle("");
+    reset();
   };
 
   return (
@@ -28,14 +31,14 @@ const Create = (props) => {
         Set <span className="text-red-400">Reminders</span> for <br /> Tasks
       </h1>
 
-      <form onSubmit={submitHandler}>
+      <form onSubmit={handleSubmit(submitHandler)}>
         <input
+          {...register("title", { required: "title con not be empty" })}
           type="text"
           placeholder="title"
-          onChange={(e) => settitle(e.target.value)}
-          value={title}
           className="outline-none border-b w-full text-3xl font-thin p-4"
         />
+        <small className="text-red-400">{errors?.title?.message}</small>
         <br />
         <br />
 
